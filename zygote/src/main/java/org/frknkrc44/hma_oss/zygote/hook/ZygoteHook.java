@@ -162,8 +162,13 @@ public class ZygoteHook extends ABaseFrameworkHook {
 
         ProcessParams.Builder builder = null;
         if (processParams.targetSdkVersion < Build.VERSION_CODES.R && processParams.isTopApp) {
+            final var last = lastForceMountedApp.getAndSet(caller);
+            if (!caller.equals(last)) {
+                logI(TAG, null, () -> "@startZygoteProcessModern: force mountAppsData for " + caller);
+            }
             builder = makeProcessParamsBuilder(processParams);
             builder.setBindMountAppsData(true);
+            logD(TAG, null, () -> "@startZygoteProcessModern: mountAppsData argument overridden for " + caller);
         }
 
         if (processParams.gids == null) {
