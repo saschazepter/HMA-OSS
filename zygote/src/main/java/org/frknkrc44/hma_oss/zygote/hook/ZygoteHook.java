@@ -154,7 +154,7 @@ public class ZygoteHook extends ABaseFrameworkHook {
      */
     @SuppressWarnings("ConstantValue")
     private void hookIntoZygoteProcessModern(EmulatedStackFrame frame, Object[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        final var processParams = (ProcessParams) args[0];
+        final var processParams = (ProcessParams) args[1];
 
         final var caller = processParams.packageName;
         final var isHookEnabled = service.isHookEnabled(caller);
